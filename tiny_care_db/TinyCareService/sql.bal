@@ -19,7 +19,7 @@ type MyPatient record {|
 |};
 
 string dbUser = "root";
-string dbPassword = "Myworld@1989";
+string dbPassword = "*******";
 string dbName = "tiny_care";
 
 public function initializeDatabase(string dbName) returns sql:Error? {
