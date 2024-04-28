@@ -1,0 +1,12 @@
+[package]
+org = "janith"
+name = "TinyCareService"
+version = "0.1.0"
+distribution = "2201.8.6"
+
+[build-options]
+observabilityIncluded = true
+[[platform.java11.dependency]]
+artifactId = "mysql-connector-java"
+version = "8.3.0"
+path = "E:/mysql-connector-j-8.3.0/mysql-connector-j-8.3.0.jar"
