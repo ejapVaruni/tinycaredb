@@ -5,7 +5,7 @@ type MapAnyData map<anydata>;
 
 # A service representing a network-accessible API
 # bound to port `8089`.
-service /sample on new http:Listener(8108) {
+service /sample on new http:Listener(8113) {
 
     # A resource representing an invokable API method accessible at `/sample/getData/{id}`.
     # This resource is used with path parameters

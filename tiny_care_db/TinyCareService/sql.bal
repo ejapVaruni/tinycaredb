@@ -29,11 +29,11 @@ os:Error? err1 = os:setEnv("DB_PASSWORD", "*********");
 os:Error? err2 = os:setEnv("DB_NAME", "defaultdb");
 os:Error? err3 = os:setEnv("DB_HOST", "mysql-990ca17d-e0a5-4361-8eba-90df4ece0966-tinycare685331494-ch.h.aivencloud.com");
 os:Error? err4 = os:setEnv("DB_PORT", "23452");
-string dbUser = os:getEnv("DB_USER");
-string dbPassword = os:getEnv("DB_PASSWORD");
-string dbName = os:getEnv("DB_NAME");
-string dbHost = os:getEnv("DB_HOST");
-string dbPort = os:getEnv("DB_PORT");
+//string dbUser = os:getEnv("DB_USER");
+//string dbPassword = os:getEnv("DB_PASSWORD");
+//string dbName = os:getEnv("DB_NAME");
+//string dbHost = os:getEnv("DB_HOST");
+//string dbPort = os:getEnv("DB_PORT");
 
 public function initializeDatabase(string dbName) returns sql:Error? {
     mysql:Client mysqlClient = check new (dbHost, dbUser, dbPassword, dbPort);
