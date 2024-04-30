@@ -3,6 +3,7 @@ import ballerina/sql;
 import ballerinax/mysql;
 import ballerina/log;
 import ballerina/time;
+import ballerina/os;
 
 public type Data record {|
     int Id;
@@ -18,11 +19,21 @@ type MyPatient record {|
     boolean FamilyHistory;
 |};
 
-string dbUser = "avnadmin";
-string dbPassword = "**********";
-string dbName = "tiny_care";
-string dbHost = "mysql-990ca17d-e0a5-4361-8eba-90df4ece0966-tinycare685331494-ch.h.aivencloud.com";
-string dbPort = "23452";
+//string dbUser = "root";
+//string dbPassword = "Myworld@1989";
+//string dbName = "defaultdb";
+//string dbHost = "localhost";
+//string dbPort = "";
+os:Error? err = os:setEnv("DB_USER", "avnadmin");
+os:Error? err1 = os:setEnv("DB_PASSWORD", "*********");
+os:Error? err2 = os:setEnv("DB_NAME", "defaultdb");
+os:Error? err3 = os:setEnv("DB_HOST", "mysql-990ca17d-e0a5-4361-8eba-90df4ece0966-tinycare685331494-ch.h.aivencloud.com");
+os:Error? err4 = os:setEnv("DB_PORT", "23452");
+string dbUser = os:getEnv("DB_USER");
+string dbPassword = os:getEnv("DB_PASSWORD");
+string dbName = os:getEnv("DB_NAME");
+string dbHost = os:getEnv("DB_HOST");
+string dbPort = os:getEnv("DB_PORT");
 
 public function initializeDatabase(string dbName) returns sql:Error? {
     mysql:Client mysqlClient = check new (dbHost, dbUser, dbPassword, dbPort);
@@ -40,7 +51,6 @@ type sqlQuery record {
 };
 
 function initializeTable() returns string|sql:Error? {
-
     mysql:Client mysqlClient = check new (dbHost, dbUser, dbPassword, dbPort);
     sql:ParameterizedQuery querydrop1 = `DROP TABLE IF EXISTS Patient` ;
     sql:ParameterizedQuery querydrop2 = `DROP TABLE IF EXISTS Patient` ;
@@ -105,7 +115,6 @@ FROM
 # + id - Id of the data item to retrieve
 # + return - Ruturn the added data item if passed, or return error if something failed. 
 public function GetDataItemById(int id) returns Data|error {
-
     mysql:Client mysqlClient1 = check new (dbHost, dbUser, dbPassword, dbPort);
     log:printInfo("SQL GetDataItemById Method Reached");
 
@@ -138,7 +147,6 @@ public function GetDataItemById(int id) returns Data|error {
 # Description.
 # + return - return value description
 public function GetAllPatients() returns MyPatient[]|sql:Error {
-
     mysql:Client mysqlClient1 = check new (dbHost, dbUser, dbPassword, dbPort);
     log:printInfo("SQL GetAllPatients Method Reached");
 
@@ -153,7 +161,6 @@ public function GetAllPatients() returns MyPatient[]|sql:Error {
 #
 # + return - Ruturn all the items if passed, or return error if something failed. 
 public function GetAllNewBorns() returns MyPatient[]|sql:Error {
-
     mysql:Client mysqlClient1 = check new (dbHost, dbUser, dbPassword, dbPort);
     log:printInfo("SQL GetAllNewBorns Method Reached");
 
@@ -166,7 +173,6 @@ public function GetAllNewBorns() returns MyPatient[]|sql:Error {
 # Description.
 # + return - return value description
 public function GetSezuirePatients() returns MyPatient[]|sql:Error {
-
     mysql:Client mysqlClient1 = check new (dbHost, dbUser, dbPassword, dbPort);
     log:printInfo("SQL GetAllPatients Method Reached");
 
@@ -177,7 +183,6 @@ public function GetSezuirePatients() returns MyPatient[]|sql:Error {
 }
 
 public function GetSezuireCount() returns error|int[]{
-
     mysql:Client mysqlClient1 = check new (dbHost, dbUser, dbPassword, dbPort);
     log:printInfo("SQL GetSezuireCount Method Reached");
     int[] ids = [1, 2, 3, 4, 5, 6, 7];
@@ -192,7 +197,6 @@ public function GetSezuireCount() returns error|int[]{
 # Description.
 # + return - return value description
 public function GetSezuirePastCount() returns error|int[]{
-
     mysql:Client mysqlClient1 = check new (dbHost, dbUser, dbPassword, dbPort);
     log:printInfo("SQL GetSezuireCount Method Reached");
     int[] ids = [1, 2, 3, 4, 5, 6, 7];
@@ -206,7 +210,6 @@ public function GetSezuirePastCount() returns error|int[]{
 # Description.
 # + return - return value description
 public function MalePercentage() returns error|int{
-
     mysql:Client mysqlClient1 = check new (dbHost, dbUser, dbPassword, dbPort);
     log:printInfo("SQL MalePercentage Method Reached");
     sql:ParameterizedQuery query = `SELECT SUM(r.gender = "male")*100/count(*) as maleP FROM (SELECT DISTINCT(s.PatientID), p.gender FROM Seizure as s INNER JOIN Patient as p ON s.PatientID = p.PatientID) as r`;
@@ -220,7 +223,6 @@ public function MalePercentage() returns error|int{
 # Description.
 # + return - return value description
 public function FemalePercentage() returns error|int{
-
     mysql:Client mysqlClient1 = check new (dbHost, dbUser, dbPassword, dbPort);
     log:printInfo("SQL MalePercentage Method Reached");
     sql:ParameterizedQuery query = `SELECT SUM(r.gender = "female")*100/count(*) as maleF FROM (SELECT DISTINCT(s.PatientID), p.gender FROM Seizure as s INNER JOIN Patient as p ON s.PatientID = p.PatientID) as r`;
